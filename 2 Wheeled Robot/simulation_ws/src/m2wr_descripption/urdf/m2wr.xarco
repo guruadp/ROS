@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+
+<robot name="m2wr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <material name="blue">
+        <color rgba="0.0 0.0 0.8 1.0"/>
+    </material>
+
+    <gazebo reference="link_chassis">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+    <gazebo reference="link_left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="link_right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <link name="link_chassis">
+        <!-- pose and inertial -->
+        <pose>0 0 0.1 0 0 0</pose>
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="5"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <!-- body -->
+        <collision name="collision_chassis">
+            <geometry>
+                <box size="0.5 0.3 0.07"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.5 0.3 0.07"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <!-- caster front -->
+        <collision name="caster_front_collision">
+            <origin xyz="0.35 0 -0.05" rpy="0 0 0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <surface>
+                <frition>
+                    <ode>
+                        <mu>0</mu>
+                        <mu2>0</mu2>
+                        <slip1>1.0</slip1>
+                        <slip2>1.0</slip2>
+                    </ode>
+                </frition>
+            </surface>
+        </collision>
+        <visual name="caster_front_visual">
+            <origin xyz="0.2 0 -0.05" rpy="0 0 0" />
+            <geometry>
+                <box size="0.5 0.3 0.07"/>
+            </geometry>
+        </visual>        
+    </link>
+    
+    <link name="link_right_wheel">
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="0.2"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <!-- body -->
+        <collision name="link_right_wheel_collision">
+            <geometry>
+                <cylinder length="0.04" radius="0.1"/>
+            </geometry>
+        </collision>
+        <visual name="link_right_wheel_visual">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder length="0.04" radius="0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+   <joint name="joint_right_wheel" type="continuous">
+        <origin xyz="-0.05 0.15 0" rpy="0 0 0"/>
+        <parent link="link_chassis"/>
+        <child link="link_right_wheel"/>
+        <calibration rising="0.0"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />
+        <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" soft_upper_limit="0.5" />
+    </joint>
+
+    <link name="link_left_wheel">
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="0.2"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <!-- body -->
+        <collision name="link_left_wheel_collision">
+            <geometry>
+                <cylinder length="0.04" radius="0.1"/>
+            </geometry>
+        </collision>
+        <visual name="link_left_wheel_visual">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder length="0.04" radius="0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+   <joint name="joint_left_wheel" type="continuous">
+        <origin xyz="-0.05 -0.15 0" rpy="0 0 0"/>
+        <parent link="link_chassis"/>
+        <child link="link_left_wheel"/>
+        <calibration rising="0.0"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />
+        <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" soft_upper_limit="0.5" />
+    </joint>
+</robot>
