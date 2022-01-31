@@ -1,0 +1,8 @@
+prefix=/media/guruadp/New Volume/Projects/ROS/2 Wheeled Robot/simulation_ws/devel
+
+Name: m2wr_descripption
+Description: Description of m2wr_descripption
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
