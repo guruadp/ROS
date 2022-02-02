@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/media/guruadp/New Volume/Projects/ROS/Construct_ROS_basics/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/media/guruadp/New Volume/Projects/ROS/Construct_ROS_basics/catkin_ws/install -G Unix Makefiles
